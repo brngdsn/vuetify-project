@@ -1,9 +1,15 @@
 // Utilities
-import { defineStore } from 'pinia'
-import axios from 'axios'
+import { defineStore } from 'pinia';
+import axios from 'axios';
+
+interface State {
+  data: any;
+  loading: boolean;
+  error: Error | null;
+}
 
 export const useAppStore = defineStore('app', {
-  state: () => ({
+  state: (): State => ({
     data: null,
     loading: false,
     error: null,
