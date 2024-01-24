@@ -14,16 +14,18 @@ export const useAppStore = defineStore('app', {
     loading: false,
     error: null,
   }),
-  async fetchData() {
-    this.loading = true;
-    this.error = null;
-    try {
-      const response = await axios.get('https://data.nasa.gov/resource/y77d-th95.json');
-      this.data = response.data;
-    } catch (error) {
-      this.error = error;
-    } finally {
-      this.loading = false;
+  actions: {
+    async fetchData() {
+      this.loading = true;
+      this.error = null;
+      try {
+        const response = await axios.get('https://data.nasa.gov/resource/y77d-th95.json');
+        this.data = response.data;
+      } catch (error) {
+        this.error = error;
+      } finally {
+        this.loading = false;
+      }
     }
-  }
+  },
 })
