@@ -71,6 +71,7 @@
 </template>
 
 <script setup lang="ts">
+  import { onMounted } from 'vue';
   import { useAppStore } from '@/store/app';
   const appStore = useAppStore();
   
