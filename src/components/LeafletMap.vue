@@ -19,6 +19,7 @@
   };
 
   const addMarkers = (data) => {
+    console.log('addMarkers')
     data.forEach(item => {
       if (item.geolocation && item.geolocation.coordinates) {
         L.marker([item.geolocation.coordinates[1], item.geolocation.coordinates[0]])
@@ -51,7 +52,9 @@
   });
 
   watch(() => props.mapData, (newValue) => {
+    console.log('watch.map')
     if (newValue) {
+      console.log('add new markers')
       addMarkers(newValue);
     }
   }, { immediate: true });
