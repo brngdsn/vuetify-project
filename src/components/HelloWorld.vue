@@ -7,7 +7,7 @@
         :items="autocompleteItems"
         label="Search by Name or ID"
         class="map-autocomplete"
-        @input="filterData"
+        @change="filterData"
         :item-title="item => item ? `${item.id}: ${item.name}` : ''"
         item-value="id"
       ></v-autocomplete>
@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, computed, ref } from 'vue';
+  import { onMounted, computed, watch, ref } from 'vue';
   import LeafletMap from '@/components/LeafletMap.vue';
   import { useAppStore } from '@/store/app';
   
@@ -47,6 +47,10 @@
       filteredMapData.value = mapData.value;
     }
   };
+
+  watch(mapData, (newData) => {
+    filterData();
+  });
 </script>
 
 <style scoped>
