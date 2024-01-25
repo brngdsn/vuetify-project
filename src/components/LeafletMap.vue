@@ -3,20 +3,36 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted } from 'vue';
+  import { onMounted, onUnmounted, ref } from 'vue';
   import L from 'leaflet';
   import 'leaflet/dist/leaflet.css';
+
+  const map = ref(null);
   
   onMounted(() => {
     const map = L.map('map').setView([51.505, -0.09], 13);
   
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    map.value = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+    }).addTo(map.value);
+
+    window.addEventListener('resize', () => {
+      setTimeout(() => {
+        map.value.invalidateSize();
+      }, 100);
+    });
+    
   });
+
+  onUnmounted(() => {
+    if (map.value) {
+      map.value.remove();
+    }
+  });
+  
 </script>
 
-<style>
+<style scoped>
 #map { 
   width: 100%; 
   height: 100%;
