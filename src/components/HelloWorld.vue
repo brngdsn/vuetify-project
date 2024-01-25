@@ -8,7 +8,7 @@
         label="Search by Name or ID"
         class="map-autocomplete"
         @input="filterData"
-        :item-text="item => `${item.id}: ${item.name}`"
+        :item-title="item => `${item.id}: ${item.name}`"
         item-value="id"
       ></v-autocomplete>
       <leaflet-map :map-data="filteredMapData"></leaflet-map>
