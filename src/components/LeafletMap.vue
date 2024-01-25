@@ -13,24 +13,19 @@
   
   const mapHeight = ref(window.innerHeight);
   const map = ref(null);
+  const markerGroup = ref(null);
 
   const setMapHeight = () => {
     mapHeight.value = window.innerHeight;
   };
 
   const addMarkers = async (data) => {
-    if (map.value) {
-      map.value.eachLayer((layer) => {
-        if (layer instanceof L.Marker) {
-          map.value.removeLayer(layer);
-        }
-      });
-    }
+    markerGroup.value = L.layerGroup();
     data.forEach((item, index) => {
       if (item.geolocation && item.geolocation.coordinates) {
         L.marker([item.geolocation.coordinates[1], item.geolocation.coordinates[0]])
-          .bindPopup(`<b>${item.name}</b><br>Mass: ${item.mass}<br>Year: ${item.year}`)
-          .addTo(map.value);
+          .bindPopup(`<b>${item.name}</b><br>Mass: ${item.mass}<br>Year: ${item.year}`);
+        markerGroup.value.addLayer(marker);
         if (index === 0) {
           const firstItemCoords = item.geolocation.coordinates;
           const zoom = data.length === 1 ? 13 : 5
@@ -38,10 +33,14 @@
         }
       }
     });
+    markerGroup.value.addTo(map.value);
   };
 
   watch(() => props.mapData, (newValue) => {
     if (newValue) {
+      if (markerGroup.value) {
+        markerGroup.value.remove();
+      }
       addMarkers(newValue);
     }
   }, { immediate: true });
