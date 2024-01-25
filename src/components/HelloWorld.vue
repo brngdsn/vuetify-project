@@ -18,7 +18,7 @@
         :text="cardText"
       >
         <v-card-actions>
-          <v-btn v-if="showAction">Add to Favourites</v-btn>
+          <v-btn v-if="showAction" @click="addToFavourites">{{ isFavourite ? 'Remove from' : 'Add to' }} Favourites</v-btn>
         </v-card-actions>
       </v-card>
     </v-responsive>
@@ -36,7 +36,9 @@
   const filteredMapData = ref([]);
 
   const mapData = computed(() => appStore.data);
+  
   const showAction = computed(() => filteredMapData.value.length === 1);
+
   const cardTitle = computed(() => {
     if (filteredMapData.value.length === 1) {
       return `${filteredMapData.value[0].name}`;
@@ -44,6 +46,7 @@
       return `${filteredMapData.value.length} Meteorite Landing(s)`
     }
   });
+  
   const cardText = computed(() => {
     if (filteredMapData.value.length === 1) {
       const item = filteredMapData.value[0];
@@ -57,6 +60,16 @@
 
   const autocompleteItems = computed(() => {
     return mapData.value ? mapData.value.map(item => ({ name: item.name, id: item.id })) : [];
+  });
+
+  const addToFavourites = () => {
+    if (filteredMapData.value.length === 1) {
+      appStore.toggleFavourite(filteredMapData.value[0].id);
+    }
+  };
+
+  const isFavourite = computed(() => {
+    return filteredMapData.value.length === 1 && appStore.isFavourite(filteredMapData.value[0].id);
   });
 
   watch(search, (newValue) => {
