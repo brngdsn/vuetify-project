@@ -16,7 +16,6 @@
         title="Card title"
         subtitle="Subtitle"
         text="Some text here."
-        variant="tonal"
       >
         <v-card-actions>
           <v-btn>Add to Favourites</v-btn>
