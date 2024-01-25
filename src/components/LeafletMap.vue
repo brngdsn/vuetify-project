@@ -26,10 +26,18 @@
     } else {
       markerGroup.value.remove();
     }
+    const markerIcon = L.icon({
+      iconSize: [25, 41],
+      iconAnchor: [10, 41],
+      popupAnchor: [2, -40],
+      iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
+      iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+      shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+    })
     data.forEach((item, index) => {
       if (item.geolocation && item.geolocation.coordinates) {
         const year = new Date(item.year).getFullYear();
-        const marker = L.marker([item.geolocation.coordinates[1], item.geolocation.coordinates[0]])
+        const marker = L.marker([item.geolocation.coordinates[1], item.geolocation.coordinates[0]], { icon: markerIcon })
           .bindPopup(`
             <b>${item.name}</b><br>
             Mass: ${item.mass} (${item.recclass})<br>
