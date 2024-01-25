@@ -21,12 +21,6 @@
   };
 
   const addMarkers = (data: Meteorite[]) => {
-    if (markerGroup.value) {
-      markerGroup.value.remove();
-    }
-    if (!markerGroup.value) {
-      markerGroup.value = L.layerGroup();
-    }
     data.forEach((item, index) => {
       if (item.geolocation && item.geolocation.coordinates) {
         const year = new Date(item.year).getFullYear();
@@ -54,6 +48,11 @@
 
   watch(() => props.mapData || [], (newValue: Meteorite[] | undefined) => {
     if (newValue && newValue.length > 0) {
+      if (!markerGroup.value) {
+        markerGroup.value = L.layerGroup();
+      } else {
+        markerGroup.value.remove();
+      }
       addMarkers(newValue);
     }
   }, { immediate: true });
