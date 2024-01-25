@@ -33,7 +33,8 @@
           .addTo(map.value);
         if (index === 0) {
           const firstItemCoords = item.geolocation.coordinates;
-          map.value.setView([firstItemCoords[1], firstItemCoords[0]], map.value.getZoom());
+          const zoom = data.length === 1 ? 13 : 5
+          map.value.setView([firstItemCoords[1], firstItemCoords[0]], zoom);
         }
       }
     });
