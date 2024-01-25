@@ -48,7 +48,8 @@
     if (filteredMapData.value.length === 1) {
       const item = filteredMapData.value[0];
       const year = new Date(item.year).getFullYear();
-      return `The "${item.name}" class ${item.recclass} meteorite, with a mass of ${item.mass}, ${item.fell === 'Found' ? 'was found' : 'had fell'} in the year ${year}.`;
+      const hasLocation = item.geolocation ? true : false;
+      return `The "${item.name}" class ${item.recclass} meteorite, with a mass of ${item.mass} grams, ${item.fell === 'Found' ? 'was found' : 'had fell'} in the year ${year}. ${!hasLocation ? 'This meteorite has no geolcation data.' : ''}`;
     } else {
       return `This comprehensive data set from The Meteoritical Society contains information on all of the known meteorite landings. Some meteorites without a geolocation may not render.`;
     }
