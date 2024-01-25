@@ -16,3 +16,9 @@
     await appStore.fetchData();
   });
 </script>
+
+<style scoped>
+  .v-container {
+    padding: 0px;
+  }
+</style>
