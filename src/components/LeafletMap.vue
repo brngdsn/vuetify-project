@@ -18,7 +18,7 @@
     mapHeight.value = window.innerHeight;
   };
 
-  const addMarkers = (data) => {
+  const addMarkers = async (data) => {
     if (map.value) {
       map.value.eachLayer((layer) => {
         if (layer instanceof L.Marker) {
