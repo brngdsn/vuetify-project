@@ -19,9 +19,12 @@
   };
 
   const addMarkers = (data) => {
+    console.log('addMarkers', { data })
     if (map.value) {
+      console.log('map.value')
       map.value.eachLayer((layer) => {
         if (layer instanceof L.Marker) {
+          console.log('remove layer')
           map.value.removeLayer(layer);
         }
       });
@@ -34,6 +37,14 @@
       }
     });
   };
+
+  watch(() => props.mapData, (newValue) => {
+    console.log('props.mapData', { newValue })
+    if (newValue) {
+      console.log('add new markers')
+      addMarkers(newValue);
+    }
+  }, { immediate: true });
   
   onMounted(() => {
     setMapHeight();
@@ -56,14 +67,6 @@
     }
     
   });
-
-  watch(() => props.mapData, (newValue) => {
-    console.log('watch.map')
-    if (newValue) {
-      console.log('add new markers')
-      addMarkers(newValue);
-    }
-  }, { immediate: true });
 
   onUnmounted(() => {
     if (map.value) {
