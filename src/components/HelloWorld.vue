@@ -26,21 +26,18 @@
 
   const search = ref('');
   const filteredMapData = ref([]);
-  
-  onMounted(async () => {
-    await appStore.fetchData();
-    filteredMapData.value = appStore.data;
-  });
 
   const mapData = computed(() => appStore.data);
 
   const autocompleteItems = computed(() => {
-    console.log('autocomplete')
+    console.log('autocompleteItems')
     return mapData.value ? mapData.value.map(item => ({ name: item.name, id: item.id })) : [];
   });
 
   const filterData = (selectedItem) => {
+    console.log('filterData', { selectedItem })
     if (selectedItem) {
+      console.log('selectedItem')
       filteredMapData.value = [mapData.value.find(item => item.id === selectedItem.id)];
     } else {
       filteredMapData.value = mapData.value;
@@ -48,9 +45,15 @@
   };
 
   watch(search, (newValue) => {
+    console.log('watch.search', { newValue })
     if (!newValue) {
       filteredMapData.value = mapData.value;
     }
+  });
+
+  onMounted(async () => {
+    await appStore.fetchData();
+    filteredMapData.value = appStore.data;
   });
 </script>
 
