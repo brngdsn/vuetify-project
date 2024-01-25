@@ -88,4 +88,7 @@
   #map { 
     width: 100%; 
   }
+  .leaflet-top.leaflet-left {
+    top: 45%;
+  }
 </style>
