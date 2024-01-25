@@ -6,6 +6,7 @@ interface State {
   data: any;
   loading: boolean;
   error: Error | null;
+  favourites: Set<string>;
 }
 
 export const useAppStore = defineStore('app', {
@@ -13,6 +14,7 @@ export const useAppStore = defineStore('app', {
     data: null,
     loading: false,
     error: null,
+    favourites: new Set(JSON.parse(localStorage.getItem('favourites') || '[]')),
   }),
   actions: {
     async fetchData() {
@@ -26,6 +28,17 @@ export const useAppStore = defineStore('app', {
       } finally {
         this.loading = false;
       }
+    },
+    toggleFavourite(id: string) {
+      if (this.favourites.has(id)) {
+        this.favourites.delete(id);
+      } else {
+        this.favourites.add(id);
+      }
+      localStorage.setItem('favourites', JSON.stringify([...this.favourites])); // Persist to local storage
+    },
+    isFavourite(id: string) {
+      return this.favourites.has(id);
     }
   },
 })
