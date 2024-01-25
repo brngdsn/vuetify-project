@@ -17,7 +17,7 @@
         subtitle="NASA's Open Data Portal"
         :text="cardText"
       >
-        <v-card-actions v-if="filteredMapData.value.length === 1">
+        <v-card-actions>
           <v-btn>Add to Favourites</v-btn>
         </v-card-actions>
       </v-card>
