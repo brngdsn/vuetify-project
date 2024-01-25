@@ -28,12 +28,10 @@
   const mapData = computed(() => appStore.data);
 
   const autocompleteItems = computed(() => {
-    console.log('autocompleteItems')
     return mapData.value ? mapData.value.map(item => ({ name: item.name, id: item.id })) : [];
   });
 
   watch(search, (newValue) => {
-    console.log('watch.search', { newValue })
     if (!newValue) {
       filteredMapData.value = mapData.value;
     } else {
