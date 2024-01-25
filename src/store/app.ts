@@ -26,9 +26,8 @@ export const useAppStore = defineStore('app', {
         this.data = response.data as Meteorite[];
       } catch (error) {
         if (error instanceof Error) {
-          this.error = error; // TypeScript knows error is an instance of Error
+          this.error = error;
         } else {
-          // Handle the case where error is not an instance of Error
           this.error = new Error('An unknown error occurred');
         }
       } finally {
