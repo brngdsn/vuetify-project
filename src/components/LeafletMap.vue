@@ -23,8 +23,14 @@
     markerGroup.value = L.layerGroup();
     data.forEach((item, index) => {
       if (item.geolocation && item.geolocation.coordinates) {
-        L.marker([item.geolocation.coordinates[1], item.geolocation.coordinates[0]])
-          .bindPopup(`<b>${item.name}</b><br>Mass: ${item.mass}<br>Year: ${item.year}`);
+        const year = new Date(item.year).getFullYear();
+        const marker = L.marker([item.geolocation.coordinates[1], item.geolocation.coordinates[0]])
+          .bindPopup(`
+            <b>${item.name}</b><br>
+            Mass: ${item.mass} (${item.class})<br>
+            Year: ${year}<br>
+            Fell: ${item.fell}
+          `);
         markerGroup.value.addLayer(marker);
         if (index === 0) {
           const firstItemCoords = item.geolocation.coordinates;
