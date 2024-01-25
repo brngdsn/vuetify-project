@@ -37,7 +37,7 @@ mv dist/ saphire/
 Then you can serve it, e.g., with `pm2` and `serve`:
 
 ```bash
-PORT=3300 pm2 start serve --name "ooo-very/saphire"
+pm2 start server.js --name ooo-very/saphire
 ```
 
 ## 💪 Support Vuetify Development
