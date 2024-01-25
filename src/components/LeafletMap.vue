@@ -34,7 +34,7 @@
         markerGroup.value.addLayer(marker);
         if (index === 0) {
           const firstItemCoords = item.geolocation.coordinates;
-          const zoom = data.length === 1 ? 7 : 5
+          const zoom = data.length === 1 ? 9 : 7
           map.value.setView([firstItemCoords[1], firstItemCoords[0]], zoom);
         }
       }
