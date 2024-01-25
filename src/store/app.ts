@@ -1,9 +1,10 @@
 // Utilities
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import { Meteorite } from '@/types/types.ts';
 
 interface State {
-  data: any;
+  data: Meteorite[] | null;
   loading: boolean;
   error: Error | null;
   favourites: Set<string>;
@@ -22,7 +23,7 @@ export const useAppStore = defineStore('app', {
       this.error = null;
       try {
         const response = await axios.get('https://data.nasa.gov/resource/y77d-th95.json');
-        this.data = response.data;
+        this.data = response.data as Meteorite[];
       } catch (error) {
         this.error = error;
       } finally {

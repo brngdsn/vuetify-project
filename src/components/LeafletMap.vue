@@ -6,20 +6,21 @@
   import { onMounted, onUnmounted, ref, watch } from 'vue';
   import L from 'leaflet';
   import 'leaflet/dist/leaflet.css';
+  import { Meteorite } from '@/types/types.ts';
 
   const props = defineProps({
-    mapData: Array
+    mapData: Array as () => Meteorite[]
   });
   
   const mapHeight = ref(window.innerHeight);
-  const map = ref(null);
+  const map = ref<L.Map | null>(null);
   const markerGroup = ref<L.LayerGroup | null>(null);
 
   const setMapHeight = () => {
     mapHeight.value = window.innerHeight;
   };
 
-  const addMarkers = (data) => {
+  const addMarkers = (data: Meteorite[]) => {
     markerGroup.value = L.layerGroup();
     data.forEach((item, index) => {
       if (item.geolocation && item.geolocation.coordinates) {
@@ -42,7 +43,7 @@
     markerGroup.value.addTo(map.value);
   };
 
-  watch(() => props.mapData, (newValue) => {
+  watch(() => props.mapData, (newValue: Meteorite[]) => {
     if (newValue && newValue.length > 0) {
       if (!markerGroup.value) {
         markerGroup.value = L.layerGroup();

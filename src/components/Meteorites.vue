@@ -27,19 +27,20 @@
 
 <script setup lang="ts">
   import { onMounted, computed, watch, ref } from 'vue';
+  import { Meteorite } from '@/types/types.ts';
   import LeafletMap from '@/components/LeafletMap.vue';
   import { useAppStore } from '@/store/app';
   
   const appStore = useAppStore();
 
-  const search = ref('');
-  const filteredMapData = ref([]);
+  const search = ref<string>('');
+  const filteredMapData = ref<Meteorite[]>([]);
 
-  const mapData = computed(() => appStore.data);
+  const mapData = computed((): Meteorite[] => appStore.data);
   
-  const showAction = computed(() => filteredMapData.value.length === 1);
+  const showAction = computed((): boolean => filteredMapData.value.length === 1);
 
-  const cardTitle = computed(() => {
+  const cardTitle = computed((): string => {
     if (filteredMapData.value.length === 1) {
       return `${filteredMapData.value[0].name}`;
     } else {
@@ -47,7 +48,7 @@
     }
   });
   
-  const cardText = computed(() => {
+  const cardText = computed((): string => {
     if (filteredMapData.value.length === 1) {
       const item = filteredMapData.value[0];
       const year = new Date(item.year).getFullYear();
@@ -58,7 +59,7 @@
     }
   });
 
-  const autocompleteItems = computed(() => {
+  const autocompleteItems = computed((): { name: string; id: string }[] => {
     return mapData.value ? mapData.value.map(item => ({ name: item.name, id: item.id })) : [];
   });
 
@@ -68,11 +69,11 @@
     }
   };
 
-  const isFavourite = computed(() => {
+  const isFavourite = computed((): boolean => {
     return filteredMapData.value.length === 1 && appStore.isFavourite(filteredMapData.value[0].id);
   });
 
-  watch(search, (newValue) => {
+  watch(search, (newValue: string) => {
     if (!newValue) {
       filteredMapData.value = mapData.value;
     } else {
