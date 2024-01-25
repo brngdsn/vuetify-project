@@ -36,7 +36,7 @@
   const search = ref<string>('');
   const filteredMapData = ref<Meteorite[]>([]);
 
-  const mapData = computed((): Meteorite[] => appStore.data);
+  const mapData = computed((): Meteorite[] => appStore.data || []);
   
   const showAction = computed((): boolean => filteredMapData.value.length === 1);
 
@@ -53,7 +53,7 @@
       const item = filteredMapData.value[0];
       const year = new Date(item.year).getFullYear();
       const hasLocation = item.geolocation ? true : false;
-      return `The "${item.name}" class ${item.recclass} meteorite, with a mass of ${item.mass} grams, ${item.fell === 'Found' ? 'was found' : 'had fell'} in the year ${year}. ${!hasLocation ? 'This meteorite has no geolcation data.' : ''}`;
+      return `The "${item.name}" class ${item.recclass} meteorite, with a mass of ${item.mass} grams, ${item.fall === 'Found' ? 'was found' : 'had fell'} in the year ${year}. ${!hasLocation ? 'This meteorite has no geolcation data.' : ''}`;
     } else {
       return `This comprehensive data set from The Meteoritical Society contains information on all of the known meteorite landings. Some meteorites without a geolocation may not render.`;
     }
@@ -83,7 +83,9 @@
 
   onMounted(async () => {
     await appStore.fetchData();
-    filteredMapData.value = appStore.data || [];
+    if (filteredMapData.value) {
+      filteredMapData.value = appStore.data || [];
+    }
   });
 </script>
 

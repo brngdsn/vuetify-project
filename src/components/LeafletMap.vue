@@ -36,7 +36,9 @@
             Year: ${year}<br>
             Fell: ${item.fall}
           `);
-        markerGroup.value.addLayer(marker);
+        if (markerGroup.value) {
+          markerGroup.value.addLayer(marker);
+        }
         if (index === 0 && map.value) {
           const firstItemCoords = item.geolocation.coordinates;
           const zoom = data.length === 1 ? 9 : 7
