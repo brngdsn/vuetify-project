@@ -11,28 +11,16 @@
         item-value="id"
       ></v-autocomplete>
       <leaflet-map :map-data="filteredMapData"></leaflet-map>
-      <v-bottom-sheet v-model="sheet" inset>
-        <v-card
-          class="text-center"
-          height="200"
-        >
-          <v-card-text>
-            <v-btn
-              variant="text"
-              @click="sheet = !sheet"
-            >
-              close
-            </v-btn>
-  
-            <br>
-            <br>
-  
-            <div>
-              This is a bottom sheet that is using the inset prop
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-bottom-sheet>
+      <v-card
+        title="Card title"
+        subtitle="Subtitle"
+        text="Some text here."
+        variant="tonal"
+      >
+        <v-card-actions>
+          <v-btn>Add to Favourites</v-btn>
+        </v-card-actions>
+      </v-card>
     </v-responsive>
   </v-container>
 </template>
@@ -75,9 +63,17 @@
   .map-autocomplete {
     position: absolute;
     z-index: 1000;
-    width: 80%;
+    width: 75%;
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
+  }
+  .map-card {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 90%;
   }
 </style>
