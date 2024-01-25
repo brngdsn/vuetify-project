@@ -1,5 +1,5 @@
 <template>
-  <v-container class="fill-height">
+  <v-container class="fill-height" fluid>
     <v-responsive class="align-center text-center fill-height">
       <leaflet-map></leaflet-map>
     </v-responsive>
