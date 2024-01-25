@@ -8,7 +8,6 @@
         label="Search by Name or ID"
         class="map-autocomplete"
         @input="filterData"
-        return-object
         :item-text="item => `${item.id}: ${item.name}`"
         item-value="id"
       ></v-autocomplete>
