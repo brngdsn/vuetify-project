@@ -33,6 +33,12 @@
           .addTo(map.value);
       }
     });
+    const [{
+      geolocation: {
+        coordinates: [lon, lat]
+      }
+    }] = data;
+    L.map('map').setView([lat, lon], 5);
   };
 
   watch(() => props.mapData, (newValue) => {
