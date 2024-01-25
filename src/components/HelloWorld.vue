@@ -10,7 +10,6 @@
         @change="filterData"
         :item-title="item => item ? `${item.id}: ${item.name}` : ''"
         item-value="id"
-        return-object
       ></v-autocomplete>
       <leaflet-map :map-data="filteredMapData"></leaflet-map>
     </v-responsive>
