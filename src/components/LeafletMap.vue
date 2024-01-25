@@ -41,7 +41,7 @@
         }
         if (index === 0 && map.value instanceof L.Map) {
           const firstItemCoords = item.geolocation.coordinates;
-          const zoom = data.length === 1 ? 9 : 7
+          const zoom: number = data.length === 1 ? 9 : 7;
           (map.value as L.Map).setView([firstItemCoords[1], firstItemCoords[0]], zoom);
         }
       }
@@ -62,10 +62,10 @@
     
     map.value = L.map('map').setView([51.505, -0.09], 7);
     
-    if (map.value) {
+    if (map.value && map.value instanceof L.Map) {
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
-      }).addTo(map.value);
+      }).addTo(map.value as L.Map);
     }
 
     window.addEventListener('resize', () => {
