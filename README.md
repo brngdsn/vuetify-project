@@ -26,14 +26,18 @@ To build the project for production, use:
 yarn build
 ```
 
-(Repeat for npm, pnpm, and bun with respective commands.)
-
 Once the build process is completed, the application will be ready for deployment in a production environment.
 
-For this case, since the intended production environment is reverse proxied with nginx, you'll wanna move the `dist/` to `saphire/` to accomodate the proxy:
+For this case, since the intended production environment is reverse proxied with nginx, you'll want to move the `dist/` to `saphire/` to accomodate the proxy:
 
 ```bash
 mv dist/ saphire/
+```
+
+Then you can serve it, e.g., with `pm2` and `serve`:
+
+```bash
+PORT=3300 pm2 start serve --name "ooo-very/saphire"
 ```
 
 ## 💪 Support Vuetify Development
