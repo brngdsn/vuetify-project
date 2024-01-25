@@ -39,15 +39,15 @@
         if (markerGroup.value) {
           markerGroup.value.addLayer(marker);
         }
-        if (index === 0 && map.value) {
+        if (index === 0 && map.value instanceof L.Map) {
           const firstItemCoords = item.geolocation.coordinates;
           const zoom = data.length === 1 ? 9 : 7
-          map.value.setView([firstItemCoords[1], firstItemCoords[0]], zoom);
+          (map.value as L.Map).setView([firstItemCoords[1], firstItemCoords[0]], zoom);
         }
       }
     });
-    if (markerGroup.value && map.value) {
-      markerGroup.value.addTo(map.value);
+    if (markerGroup.value && map.value instanceof L.Map) {
+      markerGroup.value.addTo(map.value as L.Map);
     }
   };
 

@@ -25,7 +25,12 @@ export const useAppStore = defineStore('app', {
         const response = await axios.get('https://data.nasa.gov/resource/y77d-th95.json');
         this.data = response.data as Meteorite[];
       } catch (error) {
-        this.error = error;
+        if (error instanceof Error) {
+          this.error = error; // TypeScript knows error is an instance of Error
+        } else {
+          // Handle the case where error is not an instance of Error
+          this.error = new Error('An unknown error occurred');
+        }
       } finally {
         this.loading = false;
       }
