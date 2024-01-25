@@ -42,7 +42,7 @@
         geolocation: {
           coordinates: [lat, lon]
         }
-      }] = newValue;
+      }] = props.mapData.value.find(item => item.id === newValue);
       L.map('map').setView([lat, lon], 5);
     }
   }, { immediate: true });
