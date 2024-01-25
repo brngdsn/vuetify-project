@@ -11,7 +11,7 @@
         item-text="name"
         item-value="id"
       ></v-autocomplete>
-      <leaflet-map :map-data="mapData"></leaflet-map>
+      <leaflet-map :map-data="filteredMapData"></leaflet-map>
     </v-responsive>
   </v-container>
 </template>
