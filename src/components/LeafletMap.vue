@@ -19,7 +19,13 @@
   };
 
   const addMarkers = (data) => {
-    console.log('addMarkers')
+    if (map.value) {
+      map.value.eachLayer((layer) => {
+        if (layer instanceof L.Marker) {
+          map.value.removeLayer(layer);
+        }
+      });
+    }
     data.forEach(item => {
       if (item.geolocation && item.geolocation.coordinates) {
         L.marker([item.geolocation.coordinates[1], item.geolocation.coordinates[0]])
