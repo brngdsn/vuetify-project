@@ -38,7 +38,8 @@
         coordinates: [lon, lat]
       }
     }] = data;
-    L.map('map').setView([lat, lon], 5);
+    console.log(lat, lon);
+    map.value = L.map('map').setView([lat, lon], 5);
   };
 
   watch(() => props.mapData, (newValue) => {
