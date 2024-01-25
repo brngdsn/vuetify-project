@@ -21,10 +21,11 @@
   };
 
   const addMarkers = (data: Meteorite[]) => {
+    if (markerGroup.value) {
+      markerGroup.value.remove();
+    }
     if (!markerGroup.value) {
       markerGroup.value = L.layerGroup();
-    } else {
-      markerGroup.value.remove();
     }
     data.forEach((item, index) => {
       if (item.geolocation && item.geolocation.coordinates) {
