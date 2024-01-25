@@ -38,11 +38,11 @@
   watch(() => props.mapData, (newValue) => {
     if (newValue) {
       addMarkers(newValue);
-      const [{
+      const {
         geolocation: {
           coordinates: [lat, lon]
         }
-      }] = props.mapData.value.find(item => item.id === newValue);
+      } = props.mapData.value.find(item => item.id === newValue);
       L.map('map').setView([lat, lon], 5);
     }
   }, { immediate: true });
