@@ -3,15 +3,29 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, onUnmounted, ref, watchEffect } from 'vue';
+  import { onMounted, onUnmounted, ref, watch } from 'vue';
   import L from 'leaflet';
   import 'leaflet/dist/leaflet.css';
 
+  const props = defineProps({
+    mapData: Array
+  });
+  
   const mapHeight = ref(window.innerHeight);
   const map = ref(null);
 
   const setMapHeight = () => {
     mapHeight.value = window.innerHeight;
+  };
+
+  const addMarkers = (data) => {
+    data.forEach(item => {
+      if (item.geolocation && item.geolocation.coordinates) {
+        L.marker([item.geolocation.coordinates[1], item.geolocation.coordinates[0]])
+          .bindPopup(`<b>${item.name}</b><br>Mass: ${item.mass}<br>Year: ${item.year}`)
+          .addTo(map.value);
+      }
+    });
   };
   
   onMounted(() => {
@@ -29,20 +43,24 @@
         map.value.invalidateSize();
       }, 100);
     });
+
+    if (props.mapData) {
+      addMarkers(props.mapData);
+    }
     
   });
+
+  watch(() => props.mapData, (newValue) => {
+    if (newValue) {
+      addMarkers(newValue);
+    }
+  }, { immediate: true });
 
   onUnmounted(() => {
     if (map.value) {
       map.value.remove();
     }
     window.removeEventListener('resize', setMapHeight);
-  });
-
-  watchEffect(() => {
-    if (map.value) {
-      map.value.invalidateSize();
-    }
   });
   
 </script>
