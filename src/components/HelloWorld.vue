@@ -1,6 +1,6 @@
 <template>
   <v-container class="fill-height" fluid>
-    <v-responsive class="align-center text-center fill-height">
+    <v-responsive class="align-center fill-height">
       <v-autocomplete
         variant="solo-inverted"
         v-model="search"
