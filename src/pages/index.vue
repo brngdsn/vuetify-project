@@ -1,5 +1,5 @@
 <template>
-  <HelloWorld />
+  <Meteorites />
 </template>
 
 <script lang="ts" setup>
