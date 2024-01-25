@@ -1,7 +1,7 @@
 // Utilities
 import { defineStore } from 'pinia';
 import axios from 'axios';
-import { Meteorite } from '@/types/types.ts';
+import { Meteorite } from '@/types/types';
 
 interface State {
   data: Meteorite[] | null;

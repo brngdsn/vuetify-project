@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
   import { onMounted, computed, watch, ref } from 'vue';
-  import { Meteorite } from '@/types/types.ts';
+  import { Meteorite } from '@/types/types';
   import LeafletMap from '@/components/LeafletMap.vue';
   import { useAppStore } from '@/store/app';
   
@@ -83,7 +83,7 @@
 
   onMounted(async () => {
     await appStore.fetchData();
-    filteredMapData.value = appStore.data;
+    filteredMapData.value = appStore.data || [];
   });
 </script>
 

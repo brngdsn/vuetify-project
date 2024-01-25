@@ -6,7 +6,7 @@
   import { onMounted, onUnmounted, ref, watch } from 'vue';
   import L from 'leaflet';
   import 'leaflet/dist/leaflet.css';
-  import { Meteorite } from '@/types/types.ts';
+  import { Meteorite } from '@/types/types';
 
   const props = defineProps({
     mapData: Array as () => Meteorite[]
@@ -21,7 +21,11 @@
   };
 
   const addMarkers = (data: Meteorite[]) => {
-    markerGroup.value = L.layerGroup();
+    if (!markerGroup.value) {
+      markerGroup.value = L.layerGroup();
+    } else {
+      markerGroup.value.remove();
+    }
     data.forEach((item, index) => {
       if (item.geolocation && item.geolocation.coordinates) {
         const year = new Date(item.year).getFullYear();
@@ -33,23 +37,20 @@
             Fell: ${item.fall}
           `);
         markerGroup.value.addLayer(marker);
-        if (index === 0) {
+        if (index === 0 && map.value) {
           const firstItemCoords = item.geolocation.coordinates;
           const zoom = data.length === 1 ? 9 : 7
           map.value.setView([firstItemCoords[1], firstItemCoords[0]], zoom);
         }
       }
     });
-    markerGroup.value.addTo(map.value);
+    if (markerGroup.value && map.value) {
+      markerGroup.value.addTo(map.value);
+    }
   };
 
-  watch(() => props.mapData, (newValue: Meteorite[]) => {
+  watch(() => props.mapData || [], (newValue: Meteorite[] | undefined) => {
     if (newValue && newValue.length > 0) {
-      if (!markerGroup.value) {
-        markerGroup.value = L.layerGroup();
-      } else {
-        markerGroup.value.remove();
-      }
       addMarkers(newValue);
     }
   }, { immediate: true });
@@ -59,14 +60,18 @@
     
     map.value = L.map('map').setView([51.505, -0.09], 7);
     
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map.value);
+    if (map.value) {
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map.value);
+    }
 
     window.addEventListener('resize', () => {
       setMapHeight();
       setTimeout(() => {
-        map.value.invalidateSize();
+        if (map.value) {
+          map.value.invalidateSize();
+        }
       }, 100);
     });
 
