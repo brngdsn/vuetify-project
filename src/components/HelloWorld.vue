@@ -60,7 +60,7 @@
   .map-autocomplete {
     position: absolute;
     z-index: 1000;
-    width: 300px;
+    width: 90%;
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
