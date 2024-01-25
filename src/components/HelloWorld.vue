@@ -38,22 +38,18 @@
     return mapData.value ? mapData.value.map(item => ({ name: item.name, id: item.id })) : [];
   });
 
-  const filterData = () => {
-    if (search.value) {
-      console.log('filterData')
-      filteredMapData.value = mapData.value.filter(item =>
-        item.name.toLowerCase().includes(search.value.toLowerCase()) ||
-        item.id.toString().includes(search.value)
-      );
-      console.log({filteredMapData})
+  const filterData = (selectedItem) => {
+    if (selectedItem) {
+      filteredMapData.value = [mapData.value.find(item => item.id === selectedItem.id)];
     } else {
       filteredMapData.value = mapData.value;
     }
   };
 
-  watch(mapData, (newData) => {
-    console.log('watch.parent')
-    filterData();
+  watch(search, (newValue) => {
+    if (!newValue) {
+      filteredMapData.value = mapData.value;
+    }
   });
 </script>
 
