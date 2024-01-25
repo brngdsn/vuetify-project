@@ -43,7 +43,7 @@
   };
 
   watch(() => props.mapData, (newValue) => {
-    if (newValue) {
+    if (newValue && newValue.length > 0) {
       if (!markerGroup.value) {
         markerGroup.value = L.layerGroup();
       } else {
