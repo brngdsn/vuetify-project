@@ -26,11 +26,15 @@
         }
       });
     }
-    data.forEach(item => {
+    data.forEach((item, index) => {
       if (item.geolocation && item.geolocation.coordinates) {
         L.marker([item.geolocation.coordinates[1], item.geolocation.coordinates[0]])
           .bindPopup(`<b>${item.name}</b><br>Mass: ${item.mass}<br>Year: ${item.year}`)
           .addTo(map.value);
+        if (index === 0) {
+          const firstItemCoords = item.geolocation.coordinates;
+          map.value.setView([firstItemCoords[1], firstItemCoords[0]], map.value.getZoom());
+        }
       }
     });
   };
@@ -38,10 +42,6 @@
   watch(() => props.mapData, (newValue) => {
     if (newValue) {
       addMarkers(newValue);
-      if (newValue[0].geolocation && newValue[0].geolocation.coordinates) {
-        const firstItemCoords = newValue[0].geolocation.coordinates;
-        map.value.setView([firstItemCoords[1], firstItemCoords[0]], map.value.getZoom());
-      }
     }
   }, { immediate: true });
   
