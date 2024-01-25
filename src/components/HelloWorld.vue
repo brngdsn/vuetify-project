@@ -7,7 +7,6 @@
         :items="autocompleteItems"
         label="Search by Name or ID"
         class="map-autocomplete"
-        @change="filterData"
         :item-title="item => item ? `${item.id}: ${item.name}` : ''"
         item-value="id"
       ></v-autocomplete>
@@ -33,22 +32,12 @@
     return mapData.value ? mapData.value.map(item => ({ name: item.name, id: item.id })) : [];
   });
 
-  const filterData = (selectedItem) => {
-    console.log('filterData', { selectedItem })
-    if (selectedItem) {
-      console.log('selectedItem', mapData.value)
-      const filteredItem = mapData.value.find(item => item.id === selectedItem.id)
-      console.log({ filteredItem })
-      filteredMapData.value = [filteredItem];
-    } else {
-      filteredMapData.value = mapData.value;
-    }
-  };
-
   watch(search, (newValue) => {
     console.log('watch.search', { newValue })
     if (!newValue) {
       filteredMapData.value = mapData.value;
+    } else {
+      filteredMapData.value = mapData.value.filter(item => item.id === newValue);
     }
   });
 
