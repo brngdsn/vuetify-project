@@ -19,12 +19,9 @@
   };
 
   const addMarkers = (data) => {
-    console.log('addMarkers', { data })
     if (map.value) {
-      console.log('map.value')
       map.value.eachLayer((layer) => {
         if (layer instanceof L.Marker) {
-          console.log('remove layer')
           map.value.removeLayer(layer);
         }
       });
@@ -39,10 +36,14 @@
   };
 
   watch(() => props.mapData, (newValue) => {
-    console.log('props.mapData', { newValue })
     if (newValue) {
-      console.log('add new markers')
       addMarkers(newValue);
+      const [{
+        geolocation: {
+          coordinates: [lat, lon]
+        }
+      }] = newValue;
+      L.map('map').setView([lat, lon], 5);
     }
   }, { immediate: true });
   
