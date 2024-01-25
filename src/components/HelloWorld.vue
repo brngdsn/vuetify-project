@@ -8,7 +8,7 @@
         class="map-autocomplete"
         @input="filterData"
         return-object
-        item-text="name"
+        :item-text="item => `${item.id}: ${item.name}`"
         item-value="id"
       ></v-autocomplete>
       <leaflet-map :map-data="filteredMapData"></leaflet-map>
