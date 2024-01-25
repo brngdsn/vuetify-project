@@ -18,7 +18,7 @@
         :text="cardText"
       >
         <v-card-actions>
-          <v-btn>Add to Favourites</v-btn>
+          <v-btn v-if="showAction">Add to Favourites</v-btn>
         </v-card-actions>
       </v-card>
     </v-responsive>
@@ -36,9 +36,10 @@
   const filteredMapData = ref([]);
 
   const mapData = computed(() => appStore.data);
+  const showAction = computed(() => filteredMapData.value.length === 1);
   const cardTitle = computed(() => {
     if (filteredMapData.value.length === 1) {
-      return `${filteredMapData.value[0]}.name`;
+      return `${filteredMapData.value[0].name}`;
     } else {
       return `${filteredMapData.value.length} Meteorite Landing(s)`
     }
