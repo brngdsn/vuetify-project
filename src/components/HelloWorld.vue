@@ -12,6 +12,7 @@
       ></v-autocomplete>
       <leaflet-map :map-data="filteredMapData"></leaflet-map>
       <v-card
+        class="map-card"
         title="Card title"
         subtitle="Subtitle"
         text="Some text here."
@@ -34,7 +35,6 @@
 
   const search = ref('');
   const filteredMapData = ref([]);
-  const sheet = ref(false);
 
   const mapData = computed(() => appStore.data);
 
