@@ -38,6 +38,10 @@
   watch(() => props.mapData, (newValue) => {
     if (newValue) {
       addMarkers(newValue);
+      if (newValue[0].geolocation && newValue[0].geolocation.coordinates) {
+        const firstItemCoords = newValue[0].geolocation.coordinates;
+        map.value.setView([firstItemCoords[1], firstItemCoords[0]], map.value.getZoom());
+      }
     }
   }, { immediate: true });
   
