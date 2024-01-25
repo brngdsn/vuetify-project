@@ -34,7 +34,7 @@
         markerGroup.value.addLayer(marker);
         if (index === 0) {
           const firstItemCoords = item.geolocation.coordinates;
-          const zoom = data.length === 1 ? 13 : 5
+          const zoom = data.length === 1 ? 9 : 5
           map.value.setView([firstItemCoords[1], firstItemCoords[0]], zoom);
         }
       }
@@ -56,7 +56,7 @@
   onMounted(() => {
     setMapHeight();
     
-    map.value = L.map('map').setView([51.505, -0.09], 5);
+    map.value = L.map('map').setView([51.505, -0.09], 9);
     
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
