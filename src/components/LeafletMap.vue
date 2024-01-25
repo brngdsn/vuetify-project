@@ -13,13 +13,13 @@
   
   const mapHeight = ref(window.innerHeight);
   const map = ref(null);
-  const markerGroup = ref(null);
+  const markerGroup = ref<L.LayerGroup | null>(null);
 
   const setMapHeight = () => {
     mapHeight.value = window.innerHeight;
   };
 
-  const addMarkers = async (data) => {
+  const addMarkers = (data) => {
     markerGroup.value = L.layerGroup();
     data.forEach((item, index) => {
       if (item.geolocation && item.geolocation.coordinates) {
@@ -27,9 +27,9 @@
         const marker = L.marker([item.geolocation.coordinates[1], item.geolocation.coordinates[0]])
           .bindPopup(`
             <b>${item.name}</b><br>
-            Mass: ${item.mass} (${item.class})<br>
+            Mass: ${item.mass} (${item.recclass})<br>
             Year: ${year}<br>
-            Fell: ${item.fell}
+            Fell: ${item.fall}
           `);
         markerGroup.value.addLayer(marker);
         if (index === 0) {
@@ -44,7 +44,9 @@
 
   watch(() => props.mapData, (newValue) => {
     if (newValue) {
-      if (markerGroup.value) {
+      if (!markerGroup.value) {
+        markerGroup.value = L.layerGroup();
+      } else {
         markerGroup.value.remove();
       }
       addMarkers(newValue);
