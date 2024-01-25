@@ -37,8 +37,10 @@
   const filterData = (selectedItem) => {
     console.log('filterData', { selectedItem })
     if (selectedItem) {
-      console.log('selectedItem')
-      filteredMapData.value = [mapData.value.find(item => item.id === selectedItem.id)];
+      console.log('selectedItem', mapData.value)
+      const filteredItem = mapData.value.find(item => item.id === selectedItem.id)
+      console.log({ filteredItem })
+      filteredMapData.value = [filteredItem];
     } else {
       filteredMapData.value = mapData.value;
     }
